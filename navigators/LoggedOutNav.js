@@ -9,7 +9,7 @@ const Stack = createNativeStackNavigator();
 export default function LoggedOutNav() {
   return (
     <Stack.Navigator
-      initialRouteName="Welcome" 
+      initialRouteName="Welcome"
       screenOptions={{
         presentation: "card",
         headerBackTitleVisible: false,
