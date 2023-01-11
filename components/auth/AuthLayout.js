@@ -18,6 +18,7 @@ const Logo = styled.Image`
   max-width: 60%;
   width: 100%;
   height: 200px;
+  margin: 0 auto;
 `;
 
 export default function AuthLayout({ children }) {
@@ -25,7 +26,11 @@ export default function AuthLayout({ children }) {
     Keyboard.dismiss();
   };
   return (
-    <TouchableWithoutFeedback style={{ flex: 1 }} onPress={dissmissKeyboard}>
+    <TouchableWithoutFeedback
+      style={{ flex: 1 }}
+      onPress={dissmissKeyboard}
+      disabled={Platform.OS === "web"}
+    >
       <Container>
         <KeyboardAvoidingView
           style={{ width: "100%" }}
