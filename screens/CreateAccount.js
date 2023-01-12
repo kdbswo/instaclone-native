@@ -44,6 +44,7 @@ export default function CreateAccount() {
         ref={usernameRef}
         placeholder="Username"
         returnKeyType="next"
+        autoCapitalize="none"
         onSubmitEditing={() => onNext(emailRef)}
         placeholderTextColor={"rgba(255,255,255,0.6)"}
         onChangeText={(text) => setValue("username", text)}
@@ -53,6 +54,7 @@ export default function CreateAccount() {
         placeholder="Email"
         keyboardType="email-address"
         returnKeyType="next"
+        autoCapitalize="none"
         onSubmitEditing={() => onNext(passwordRef)}
         placeholderTextColor={"rgba(255,255,255,0.6)"}
         onChangeText={(text) => setValue("email", text)}
