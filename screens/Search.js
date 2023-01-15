@@ -2,7 +2,7 @@ import { Text, View } from "react-native";
 import { logUserOut } from "../apollo";
 import AuthButton from "../components/auth/AuthButton";
 
-export default function Feed() {
+export default function Search() {
   return (
     <View
       style={{
@@ -12,8 +12,7 @@ export default function Feed() {
         justifyContent: "center",
       }}
     >
-      <Text style={{ color: "white" }}>Feed</Text>
-      {/* <AuthButton text="Log Out" onPress={() => logUserOut()} /> */}
+      <Text style={{ color: "white" }}>Search</Text>
     </View>
   );
 }
