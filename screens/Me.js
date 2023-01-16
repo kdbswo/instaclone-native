@@ -1,8 +1,6 @@
 import { Text, View } from "react-native";
-import { logUserOut } from "../apollo";
-import AuthButton from "../components/auth/AuthButton";
 
-export default function Profile() {
+export default function Me() {
   return (
     <View
       style={{
@@ -12,7 +10,7 @@ export default function Profile() {
         justifyContent: "center",
       }}
     >
-      <Text style={{ color: "white" }}>Someones Profile</Text>
+      <Text style={{ color: "white" }}>Me</Text>
     </View>
   );
 }

@@ -1,8 +1,6 @@
 import { Text, TouchableOpacity, View } from "react-native";
-import { logUserOut } from "../apollo";
-import AuthButton from "../components/auth/AuthButton";
 
-export default function Search({ navigation }) {
+export default function Photo({ navigation }) {
   return (
     <View
       style={{
@@ -12,8 +10,8 @@ export default function Search({ navigation }) {
         justifyContent: "center",
       }}
     >
-      <TouchableOpacity onPress={() => navigation.navigate("Photo")}>
-        <Text style={{ color: "white" }}>Photo</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+        <Text style={{ color: "white" }}>Profile</Text>
       </TouchableOpacity>
     </View>
   );
