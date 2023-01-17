@@ -8,7 +8,7 @@ import Search from "../screens/Search";
 
 const Stack = createNativeStackNavigator();
 
-export default function StackNavFactory({ screenName }) {
+export default function SharedStackNav({ screenName }) {
   return (
     <Stack.Navigator
       screenOptions={{
