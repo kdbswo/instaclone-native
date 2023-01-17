@@ -1,11 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Feed from "../screens/Feed";
-import Notifications from "../screens/Notifications";
-import Search from "../screens/Search";
 import { View } from "react-native";
 import TabIcon from "../components/nav/TabIcon";
-import Me from "../screens/Me";
-import StackNavFactory from "../components/nav/StackNavFactory";
+import StackNavFactory from "./StackNavFactory";
 
 const Tabs = createBottomTabNavigator();
 
@@ -13,9 +9,8 @@ export default function LoggedInNav() {
   return (
     <Tabs.Navigator
       screenOptions={{
+        headerShown: false,
         tabBarShowLabel: false,
-        headerTitle: () => false,
-        headerTransparent: true,
         tabBarStyle: {
           backgroundColor: "black",
           borderTopColor: "rgba(255,255,255,0.3)",

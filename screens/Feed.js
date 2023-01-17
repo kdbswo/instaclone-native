@@ -1,8 +1,8 @@
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { logUserOut } from "../apollo";
 import AuthButton from "../components/auth/AuthButton";
 
-export default function Feed() {
+export default function Feed({ navigation }) {
   return (
     <View
       style={{
@@ -12,8 +12,10 @@ export default function Feed() {
         justifyContent: "center",
       }}
     >
-      <Text style={{ color: "white" }}>Feed</Text>
-      {/* <AuthButton text="Log Out" onPress={() => logUserOut()} /> */}
+      <TouchableOpacity onPress={() => navigation.navigate("Photo")}>
+        <Text style={{ color: "white" }}>Feed</Text>
+      </TouchableOpacity>
+      <AuthButton text="Log Out" onPress={() => logUserOut()} />
     </View>
   );
 }

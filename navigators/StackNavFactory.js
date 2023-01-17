@@ -1,16 +1,24 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Feed from "../../screens/Feed";
-import Me from "../../screens/Me";
-import Notifications from "../../screens/Notifications";
-import Photo from "../../screens/Photo";
-import Profile from "../../screens/Profile";
-import Search from "../../screens/Search";
+import Feed from "../screens/Feed";
+import Me from "../screens/Me";
+import Notifications from "../screens/Notifications";
+import Photo from "../screens/Photo";
+import Profile from "../screens/Profile";
+import Search from "../screens/Search";
 
 const Stack = createNativeStackNavigator();
 
 export default function StackNavFactory({ screenName }) {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerBackTitleVisible: false,
+        headerTintColor: "white",
+        headerStyle: {
+          backgroundColor: "black",
+        },
+      }}
+    >
       {screenName === "Feed" ? (
         <Stack.Screen name={"Feed"} component={Feed} />
       ) : null}

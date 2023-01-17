@@ -7,8 +7,8 @@ import LoggedOutNav from "./navigators/LoggedOutNav";
 import { NavigationContainer } from "@react-navigation/native";
 import { ApolloProvider, useReactiveVar } from "@apollo/client";
 import client, { isLoggedInVar, tokenVar } from "./apollo";
-import LoggedInNav from "./navigators/LoggedInNav";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import LoggedInNav from "./navigators/LoggedInNav";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
