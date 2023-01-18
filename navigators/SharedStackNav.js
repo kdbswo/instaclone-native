@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Image } from "react-native";
 import Feed from "../screens/Feed";
 import Me from "../screens/Me";
 import Notifications from "../screens/Notifications";
@@ -20,7 +21,24 @@ export default function SharedStackNav({ screenName }) {
       }}
     >
       {screenName === "Feed" ? (
-        <Stack.Screen name={"Feed"} component={Feed} />
+        <Stack.Screen
+          name={"Feed"}
+          component={Feed}
+          options={{
+            headerTitle: () => (
+              <Image
+                style={{
+                  flex: 1,
+                  height: 80,
+                  marginTop: -15,
+                  marginRight: 35,
+                }}
+                resizeMode="contain"
+                source={require("../assets/logo.png")}
+              />
+            ),
+          }}
+        />
       ) : null}
       {screenName === "Search" ? (
         <Stack.Screen name={"Search"} component={Search} />
