@@ -1,7 +1,15 @@
 import { gql, useQuery } from "@apollo/client";
-import { Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { logUserOut } from "../apollo";
 import AuthButton from "../components/auth/AuthButton";
+import ScreenLayout from "../components/ScreenLayout";
 import { COMMENT_FRAGMENT, PHOTO_FRAGMENT } from "../fragments";
 
 export const FEED_QUERY = gql`
@@ -24,20 +32,24 @@ export const FEED_QUERY = gql`
   ${COMMENT_FRAGMENT}
 `;
 
-export default function Feed({ navigation }) {
-  const { data } = useQuery(FEED_QUERY);
-  console.log(data);
+export default function Feed() {
+  const { data, loading } = useQuery(FEED_QUERY);
+  const renderPhoto = ({ item: photo }) => {
+    return (
+      <View style={{ flex: 1 }}>
+        <Text style={{ color: "white" }}>{photo.caption}</Text>
+      </View>
+    );
+  };
   return (
-    <View
-      style={{
-        backgroundColor: "black",
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Text style={{ color: "white" }}>Feed</Text>
-      {/* <AuthButton text="Log Out" onPress={() => logUserOut()} /> */}
-    </View>
+    <ScreenLayout loading={loading}>
+      <FlatList
+        data={data?.seeFeed}
+        keyExtractor={(photo) => "" + photo.id}
+        renderItem={renderPhoto}
+      />
+    </ScreenLayout>
   );
 }
+
+/* <AuthButton text="Log Out" onPress={() => logUserOut()} /> */
