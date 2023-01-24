@@ -1,13 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import { useState } from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList } from "react-native";
 import { logUserOut } from "../apollo";
 import AuthButton from "../components/auth/AuthButton";
 import Photo from "../components/Photo";
