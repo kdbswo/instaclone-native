@@ -1,7 +1,8 @@
+import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { colors } from "../colors";
 
-const Column = styled.View`
+const Column = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
 `;
@@ -31,10 +32,18 @@ const FollowBtnText = styled.Text`
   color: white;
   font-weight: 600;
 `;
-export default function UserRow({ avatar, username, isFollowing, isMe }) {
+export default function UserRow({ avatar, id, username, isFollowing, isMe }) {
+  const navigation = useNavigation();
   return (
     <Wrapper>
-      <Column>
+      <Column
+        onPress={() =>
+          navigation.navigate("Profile", {
+            username,
+            id,
+          })
+        }
+      >
         <Avatar source={{ uri: avatar }} />
         <Username>{username}</Username>
       </Column>
