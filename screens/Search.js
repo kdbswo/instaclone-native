@@ -18,12 +18,12 @@ const SEARCH_PHOTOS = gql`
   }
 `;
 
-const SearchingContainer = styled.View`
+const MessageContainer = styled.View`
   justify-content: center;
   align-items: center;
   flex: 1;
 `;
-const SearchingText = styled.Text`
+const MessageText = styled.Text`
   color: white;
   font-weight: 600;
   margin-top: 15px;
@@ -31,13 +31,15 @@ const SearchingText = styled.Text`
 
 export default function Search({ navigation }) {
   const { setValue, register, watch, handleSubmit } = useForm();
-  const [startQueryFn, { loading, data, called }] = useLazyQuery(
-    SEARCH_PHOTOS,
-    {
-      variables: { keyword: watch("keyword") },
-    }
-  );
-  const onValid = () => {};
+  const [startQueryFn, { loading, data, called }] = useLazyQuery(SEARCH_PHOTOS);
+  const onValid = ({ keyword }) => {
+    startQueryFn({
+      variables: {
+        keyword,
+      },
+    });
+  };
+  console.log(data);
   const SearchBox = () => (
     <TextInput
       style={{ backgroundColor: "white" }}
@@ -64,15 +66,21 @@ export default function Search({ navigation }) {
     <DismissKeyboard>
       <View style={{ flex: 1, backgroundColor: "black" }}>
         {loading ? (
-          <SearchingContainer>
+          <MessageContainer>
             <ActivityIndicator size="large" />
-            <SearchingText>Searching...</SearchingText>
-          </SearchingContainer>
+            <MessageText>Searching...</MessageText>
+          </MessageContainer>
         ) : null}
         {!called ? (
-          <SearchingContainer>
-            <SearchingText>Search by keyword</SearchingText>
-          </SearchingContainer>
+          <MessageContainer>
+            <MessageText>Search by keyword</MessageText>
+          </MessageContainer>
+        ) : null}
+        {data?.searchPhotos !== undefined &&
+        data?.searchPhotos?.length === 0 ? (
+          <MessageContainer>
+            <MessageText>Could not find anything</MessageText>
+          </MessageContainer>
         ) : null}
       </View>
     </DismissKeyboard>
