@@ -62,8 +62,7 @@ export default function Feed() {
         keyExtractor={(photo) => "" + photo.id}
         renderItem={renderPhoto}
       />
+      {/* <AuthButton text="Log Out" onPress={() => logUserOut()} /> */}
     </ScreenLayout>
   );
 }
-
-/* <AuthButton text="Log Out" onPress={() => logUserOut()} /> */

@@ -5,6 +5,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import styled from "styled-components/native";
+import DismissKeyboard from "../DismissKeyboard";
 
 const Container = styled.View`
   flex: 1;
@@ -22,15 +23,8 @@ const Logo = styled.Image`
 `;
 
 export default function AuthLayout({ children }) {
-  const dissmissKeyboard = () => {
-    Keyboard.dismiss();
-  };
   return (
-    <TouchableWithoutFeedback
-      style={{ flex: 1 }}
-      onPress={dissmissKeyboard}
-      disabled={Platform.OS === "web"}
-    >
+    <DismissKeyboard>
       <Container>
         <KeyboardAvoidingView
           style={{ width: "100%" }}
@@ -44,6 +38,6 @@ export default function AuthLayout({ children }) {
           {children}
         </KeyboardAvoidingView>
       </Container>
-    </TouchableWithoutFeedback>
+    </DismissKeyboard>
   );
 }
