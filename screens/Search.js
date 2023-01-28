@@ -43,7 +43,7 @@ const MessageText = styled.Text`
 `;
 export default function Search({ navigation }) {
   const numColumns = 4;
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const { setValue, register, handleSubmit } = useForm();
   const [startQueryFn, { loading, data, called }] = useLazyQuery(SEARCH_PHOTOS);
   const onValid = ({ keyword }) => {
