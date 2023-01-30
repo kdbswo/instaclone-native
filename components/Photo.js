@@ -57,6 +57,14 @@ const ExtraContainer = styled.View`
 `;
 
 function Photo({ id, user, caption, file, isLiked, likes }) {
+  const navigation = useNavigation();
+  const { width, height } = useWindowDimensions();
+  const [imageHeight, setImageHeight] = useState(height - 450);
+  useEffect(() => {
+    Image.getSize(file, (width, height) => {
+      setImageHeight(height / 10);
+    });
+  }, [file]);
   const updateToggleLike = (cache, result) => {
     const {
       data: {
@@ -64,9 +72,9 @@ function Photo({ id, user, caption, file, isLiked, likes }) {
       },
     } = result;
     if (ok) {
-      const PhotoId = `Photo:${id}`;
+      const photoId = `Photo:${id}`;
       cache.modify({
-        id: PhotoId,
+        id: photoId,
         fields: {
           isLiked(prev) {
             return !prev;
@@ -75,26 +83,18 @@ function Photo({ id, user, caption, file, isLiked, likes }) {
             if (isLiked) {
               return prev - 1;
             }
-            return +1;
+            return prev + 1;
           },
         },
       });
     }
   };
-
   const [toggleLikeMutation] = useMutation(TOGGLE_LIKE_MUTATION, {
-    variables: { id },
+    variables: {
+      id,
+    },
     update: updateToggleLike,
   });
-
-  const navigation = useNavigation();
-  const { width: Swidth } = useWindowDimensions();
-  const [imageHeight, setImageHeight] = useState(300);
-  useEffect(() => {
-    Image.getSize(file, (width, height) => {
-      setImageHeight((height * Swidth) / width);
-    });
-  }, [file]);
   const goToProfile = () => {
     navigation.navigate("Profile", {
       username: user.username,
@@ -108,9 +108,9 @@ function Photo({ id, user, caption, file, isLiked, likes }) {
         <Username>{user.username}</Username>
       </Header>
       <File
-        resizeMode="cover"
+        resizeMode="contain"
         style={{
-          Swidth,
+          width,
           height: imageHeight,
         }}
         source={{ uri: file }}
@@ -135,7 +135,7 @@ function Photo({ id, user, caption, file, isLiked, likes }) {
             })
           }
         >
-          <Likes>{likes === 1 ? "1 like" : `${likes} likes`} </Likes>
+          <Likes>{likes === 1 ? "1 like" : `${likes} likes`}</Likes>
         </TouchableOpacity>
         <Caption>
           <TouchableOpacity onPress={goToProfile}>
@@ -158,7 +158,7 @@ Photo.propTypes = {
   file: PropTypes.string.isRequired,
   isLiked: PropTypes.bool.isRequired,
   likes: PropTypes.number.isRequired,
-  commentNumber: PropTypes.number.isRequired,
+  commentNumber: PropTypes.number,
 };
 
 export default Photo;

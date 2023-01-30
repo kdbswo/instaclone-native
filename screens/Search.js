@@ -11,8 +11,6 @@ import {
   View,
 } from "react-native";
 import styled from "styled-components/native";
-import { logUserOut } from "../apollo";
-import AuthButton from "../components/auth/AuthButton";
 import DismissKeyboard from "../components/DismissKeyboard";
 
 const SEARCH_PHOTOS = gql`
@@ -30,7 +28,6 @@ const Input = styled.TextInput`
   padding: 5px 10px;
   border-radius: 7px;
 `;
-
 const MessageContainer = styled.View`
   justify-content: center;
   align-items: center;
@@ -41,10 +38,11 @@ const MessageText = styled.Text`
   font-weight: 600;
   margin-top: 15px;
 `;
+
 export default function Search({ navigation }) {
   const numColumns = 4;
   const { width } = useWindowDimensions();
-  const { setValue, register, handleSubmit } = useForm();
+  const { setValue, register, watch, handleSubmit } = useForm();
   const [startQueryFn, { loading, data, called }] = useLazyQuery(SEARCH_PHOTOS);
   const onValid = ({ keyword }) => {
     startQueryFn({
@@ -53,7 +51,6 @@ export default function Search({ navigation }) {
       },
     });
   };
-  console.log(data);
   const SearchBox = () => (
     <Input
       width={width}
@@ -77,7 +74,13 @@ export default function Search({ navigation }) {
     });
   }, []);
   const renderItem = ({ item: photo }) => (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("Photo", {
+          photoId: photo.id,
+        })
+      }
+    >
       <Image
         source={{ uri: photo.file }}
         style={{
