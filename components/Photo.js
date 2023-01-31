@@ -58,11 +58,11 @@ const ExtraContainer = styled.View`
 
 function Photo({ id, user, caption, file, isLiked, likes }) {
   const navigation = useNavigation();
-  const { width, height } = useWindowDimensions();
-  const [imageHeight, setImageHeight] = useState(height - 450);
+  const { width: Swidth, height } = useWindowDimensions();
+  const [imageHeight, setImageHeight] = useState(300);
   useEffect(() => {
     Image.getSize(file, (width, height) => {
-      setImageHeight(height / 10);
+      setImageHeight((height * Swidth) / width);
     });
   }, [file]);
   const updateToggleLike = (cache, result) => {
@@ -108,9 +108,9 @@ function Photo({ id, user, caption, file, isLiked, likes }) {
         <Username>{user.username}</Username>
       </Header>
       <File
-        resizeMode="contain"
+        resizeMode="cover"
         style={{
-          width,
+          width: Swidth,
           height: imageHeight,
         }}
         source={{ uri: file }}

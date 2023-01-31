@@ -7,7 +7,7 @@ import Photo from "../components/Photo";
 import ScreenLayout from "../components/ScreenLayout";
 import { COMMENT_FRAGMENT, PHOTO_FRAGMENT } from "../fragments";
 
-export const FEED_QUERY = gql`
+const FEED_QUERY = gql`
   query seeFeed($offset: Int!) {
     seeFeed(offset: $offset) {
       ...PhotoFragment
