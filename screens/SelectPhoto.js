@@ -8,6 +8,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { colors } from "../colors";
 
 const Container = styled.View`
   flex: 1;
@@ -27,8 +28,14 @@ const IconContainer = styled.View`
   bottom: 5px;
   right: 0px;
 `;
+const HeaderRightText = styled.Text`
+  color: ${colors.blue};
+  font-size: 16px;
+  font-weight: 600;
+  margin-right: 5px;
+`;
 
-export default function SelectPhoto() {
+export default function SelectPhoto({ navigation }) {
   const [ok, setOk] = useState(false);
   const [photos, setPhotos] = useState([]);
   const [chosenPhoto, setChosenPhoto] = useState("");
@@ -55,8 +62,18 @@ export default function SelectPhoto() {
       getPhotos();
     }
   };
+  const HeaderRight = () => (
+    <TouchableOpacity>
+      <HeaderRightText>Next</HeaderRightText>
+    </TouchableOpacity>
+  );
   useEffect(() => {
     getPermissions();
+  }, []);
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: HeaderRight,
+    });
   }, []);
   const numColumns = 4;
   const { width, height } = useWindowDimensions();
@@ -70,7 +87,11 @@ export default function SelectPhoto() {
         style={{ width: width / numColumns, height: height / 6.5 }}
       />
       <IconContainer>
-        <Ionicons name="checkmark-circle" size={18} color="white" />
+        <Ionicons
+          name="checkmark-circle"
+          size={18}
+          color={photo.uri === chosenPhoto ? colors.blue : "white"}
+        />
       </IconContainer>
     </ImageContainer>
   );

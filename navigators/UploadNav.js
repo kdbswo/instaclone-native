@@ -28,7 +28,6 @@ export default function UploadNav({}) {
               headerBackTitleVisible: false,
               headerBackVisible: false,
               headerStyle: { backgroundColor: "black" },
-
               headerLeft: () => (
                 <TouchableOpacity onPress={() => navigation.navigate("Tabs")}>
                   <Ionicons name="close" size={28} color="white" />
