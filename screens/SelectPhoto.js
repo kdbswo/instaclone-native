@@ -38,15 +38,19 @@ export default function SelectPhoto() {
     setChosenPhoto(photos[0]?.uri);
   };
   const getPermissions = async () => {
-    const { accessPrivileges, canAskAgain } =
+    const { accessPrivileges, canAskAgain, status } =
       await MediaLibrary.getPermissionsAsync();
-    if (accessPrivileges === "none" && canAskAgain) {
-      const { accessPrivileges } = await MediaLibrary.requestPermissionsAsync();
-      if (accessPrivileges !== "none") {
+    if (
+      (accessPrivileges === "none" && canAskAgain) ||
+      (status === "undetermined" && canAskAgain)
+    ) {
+      const { accessPrivileges, status } =
+        await MediaLibrary.requestPermissionsAsync();
+      if (accessPrivileges !== "none" || status !== "undetermined") {
         setOk(true);
         getPhotos();
       }
-    } else if (accessPrivileges !== "none") {
+    } else if (accessPrivileges !== "none" || status !== "undetermined") {
       setOk(true);
       getPhotos();
     }
@@ -55,7 +59,7 @@ export default function SelectPhoto() {
     getPermissions();
   }, []);
   const numColumns = 4;
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const choosePhoto = (uri) => {
     setChosenPhoto(uri);
   };
@@ -63,7 +67,7 @@ export default function SelectPhoto() {
     <ImageContainer onPress={() => choosePhoto(photo.uri)}>
       <Image
         source={{ uri: photo.uri }}
-        style={{ width: width / numColumns, height: 100 }}
+        style={{ width: width / numColumns, height: height / 6.5 }}
       />
       <IconContainer>
         <Ionicons name="checkmark-circle" size={18} color="white" />
