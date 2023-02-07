@@ -33,7 +33,9 @@
     "react-native-tab-view": "^3.3.4",
     "react-native-web": "~0.18.7",
     "styled-components": "^5.3.6",
-    "expo-media-library": "~15.0.0"
+    "expo-media-library": "~15.0.0",
+    "expo-camera": "~13.1.0",
+    "@react-native-community/slider": "4.2.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
