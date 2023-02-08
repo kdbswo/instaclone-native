@@ -1,7 +1,7 @@
 import { Camera } from "expo-camera";
 import { useEffect, useRef, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { Image, StatusBar, Text, TouchableOpacity } from "react-native";
+import { Alert, Image, StatusBar, Text, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import Slider from "@react-native-community/slider";
 import * as MediaLibrary from "expo-media-library";
@@ -16,6 +16,13 @@ const Actions = styled.View`
   padding: 0px 50px;
   align-items: center;
   justify-content: space-around;
+`;
+const PhotoActions = styled.View`
+  flex: 0.35;
+  padding: 0px 50px;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
 `;
 const ButtonsContainer = styled.View`
   width: 100%;
@@ -85,6 +92,24 @@ export default function TakePhoto({ navigation }) {
       setFlashMode(Camera.Constants.FlashMode.off);
     }
   };
+  const goToUpload = async (save) => {
+    if (save) {
+      await MediaLibrary.saveToLibraryAsync(takenPhoto);
+    }
+    console.log("Will upload", takenPhoto);
+  };
+  const onUpload = () => {
+    Alert.alert("save photo?", "save photo & upload or just upload", [
+      {
+        text: "Save & Upload",
+        onPress: () => goToUpload(true),
+      },
+      {
+        text: "Just Upload",
+        onPress: () => goToUpload(false),
+      },
+    ]);
+  };
   const onCameraReady = () => setCameraReady(true);
   const takePhoto = async () => {
     if (camera.current && cameraReady) {
@@ -93,7 +118,6 @@ export default function TakePhoto({ navigation }) {
         exif: true,
       });
       setTakenPhoto(uri);
-      // const asset = await MediaLibrary.createAssetAsync(uri);
     }
   };
   const onDissmiss = () => setTakenPhoto("");
@@ -164,17 +188,14 @@ export default function TakePhoto({ navigation }) {
           </ButtonsContainer>
         </Actions>
       ) : (
-        <Actions>
+        <PhotoActions>
           <PhotoAction onPress={onDissmiss}>
             <PhotoActionText>Dissmiss</PhotoActionText>
           </PhotoAction>
-          <PhotoAction>
+          <PhotoAction onPress={onUpload}>
             <PhotoActionText>Upload</PhotoActionText>
           </PhotoAction>
-          <PhotoAction>
-            <PhotoActionText>Save & Upload</PhotoActionText>
-          </PhotoAction>
-        </Actions>
+        </PhotoActions>
       )}
     </Container>
   );
