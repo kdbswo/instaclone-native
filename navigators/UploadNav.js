@@ -9,7 +9,7 @@ import TakePhoto from "../screens/TakePhoto";
 const Tab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
 
-export default function UploadNav({}) {
+export default function UploadNav() {
   const navigation = useNavigation();
   return (
     <Tab.Navigator

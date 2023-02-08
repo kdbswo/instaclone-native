@@ -5,6 +5,7 @@ import { Alert, Image, StatusBar, Text, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import Slider from "@react-native-community/slider";
 import * as MediaLibrary from "expo-media-library";
+import { useIsFocused } from "@react-navigation/native";
 
 const Container = styled.View`
   flex: 1;
@@ -96,7 +97,9 @@ export default function TakePhoto({ navigation }) {
     if (save) {
       await MediaLibrary.saveToLibraryAsync(takenPhoto);
     }
-    console.log("Will upload", takenPhoto);
+    navigation.navigate("UploadForm", {
+      file: takenPhoto,
+    });
   };
   const onUpload = () => {
     Alert.alert("save photo?", "save photo & upload or just upload", [
@@ -121,9 +124,10 @@ export default function TakePhoto({ navigation }) {
     }
   };
   const onDissmiss = () => setTakenPhoto("");
+  const isFocused = useIsFocused();
   return (
     <Container>
-      <StatusBar hidden={true} />
+      {isFocused ? <StatusBar hidden={true} /> : null}
       {takenPhoto === "" ? (
         <Camera
           type={cameraType}
