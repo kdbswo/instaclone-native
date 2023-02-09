@@ -81,7 +81,7 @@ export default function SelectPhoto({ navigation }) {
     navigation.setOptions({
       headerRight: HeaderRight,
     });
-  }, []);
+  }, [chosenPhoto]);
   const numColumns = 4;
   const { width, height } = useWindowDimensions();
   const choosePhoto = (uri) => {
