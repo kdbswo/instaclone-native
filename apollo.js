@@ -38,6 +38,15 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+const onErrorLink = onError((graphQLError, networkError) => {
+  if (graphQLError) {
+    console.log(`GraphQL Error`, graphQLError);
+  }
+  if (networkError) {
+    console.log(`network error`, networkError);
+  }
+});
+
 export const cache = new InMemoryCache({
   typePolicies: {
     Query: {
@@ -49,7 +58,7 @@ export const cache = new InMemoryCache({
 });
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: authLink.concat(onErrorLink).concat(httpLink),
   cache,
 });
 export default client;
