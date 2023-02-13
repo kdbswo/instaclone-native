@@ -5,6 +5,7 @@ import TabsNav from "./TabsNav";
 import UploadNav from "./UploadNav";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import MessagesNav from "./MessageNav";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,6 +43,11 @@ export default function LoggedInNav() {
           ),
         }}
         component={UploadForm}
+      />
+      <Stack.Screen
+        name="Messages"
+        component={MessagesNav}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
