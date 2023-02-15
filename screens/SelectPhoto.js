@@ -84,7 +84,7 @@ export default function SelectPhoto({ navigation }) {
   const numColumns = 4;
 
   const { width, height } = useWindowDimensions();
-  
+
   const choosePhoto = async (id) => {
     const assetInfo = await MediaLibrary.getAssetInfoAsync(id);
     setPhotoLocal(assetInfo.localUri);
