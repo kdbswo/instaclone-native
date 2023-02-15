@@ -15,14 +15,20 @@ export default function MessagesNav() {
         headerStyle: {
           backgroundColor: "black",
         },
-        headerLeft: ({ tintColor }) => (
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons name="chevron-down" size={28} color={tintColor} />
-          </TouchableOpacity>
-        ),
+        headerBackTitleVisible: false,
       }}
     >
-      <Stack.Screen name="Rooms" component={Rooms} />
+      <Stack.Screen
+        name="Rooms"
+        component={Rooms}
+        options={{
+          headerLeft: ({ tintColor }) => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Ionicons name="chevron-down" size={30} color={tintColor} />
+            </TouchableOpacity>
+          ),
+        }}
+      />
       <Stack.Screen name="Room" component={Room} />
     </Stack.Navigator>
   );
