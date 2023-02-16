@@ -4,6 +4,15 @@ import { FlatList, KeyboardAvoidingView } from "react-native";
 import ScreenLayout from "../components/ScreenLayout";
 import styled from "styled-components/native";
 
+const SEND_MESSAGE_MUTATION = gql`
+  mutation sendMessage($payload: String!, $roomId: Int, $userId: Int) {
+    sendMessage(payload: $payload, roomId: $roomId, userId: $userId) {
+      ok
+      id
+    }
+  }
+`;
+
 const ROOM_QUERY = gql`
   query seeRoom($id: Int!) {
     seeRoom(id: $id) {
@@ -20,17 +29,31 @@ const ROOM_QUERY = gql`
   }
 `;
 
-const MessageContainer = styled.View``;
-const Author = styled.View``;
-const Avatar = styled.Image``;
-const Username = styled.Text`
-  color: white;
+const MessageContainer = styled.View`
+  padding: 0px 10px;
+  flex-direction: ${(props) => (props.outGoing ? "row-reverse" : "row")};
+  align-items: flex-end;
+`;
+const Author = styled.View`
+  margin-right: 10px;
+`;
+const Avatar = styled.Image`
+  width: 20px;
+  height: 20px;
+  border-radius: 25px;
 `;
 const Message = styled.Text`
   color: white;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 5px 10px;
+  overflow: hidden;
+  border-radius: 10px;
+  font-size: 16px;
+  margin: 0px 10px;
 `;
 const TextInput = styled.TextInput`
   margin-bottom: 5px;
+  margin-top: 25px;
   border: 1px solid rgba(255, 255, 255, 0.5);
   width: 95%;
   padding: 10px 20px;
@@ -49,12 +72,13 @@ export default function Room({ route, navigation }) {
     });
   }, []);
   const renderItem = ({ item: message }) => (
-    <MessageContainer>
+    <MessageContainer
+      outGoing={message.user.username !== route?.params?.talkingTo?.username}
+    >
       <Author>
         <Avatar source={{ uri: message?.user?.avatar }} />
-        <Username>{message.user.username}</Username>
-        <Message>{message.payload}</Message>
       </Author>
+      <Message>{message.payload}</Message>
     </MessageContainer>
   );
   return (
