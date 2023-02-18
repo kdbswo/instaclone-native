@@ -14,13 +14,15 @@ export const ME_QUERY = gql`
 
 export default function useMe() {
   const hasToken = useReactiveVar(isLoggedInVar);
-  const { data } = useQuery(ME_QUERY, {
+  const { data, refetch } = useQuery(ME_QUERY, {
     skip: !hasToken,
   });
   useEffect(() => {
     if (data?.me === null) {
       logUserOut();
+      refetch();
     }
   }, [data]);
+  refetch();
   return { data };
 }
