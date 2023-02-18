@@ -62,6 +62,7 @@ const TextInput = styled.TextInput`
   border-radius: 1000px;
   color: white;
 `;
+
 export default function Room({ route, navigation }) {
   const { data: meData } = useMe();
   const { register, setValue, handleSubmit, getValues } = useForm();
@@ -133,7 +134,7 @@ export default function Room({ route, navigation }) {
   }, [register]);
   useEffect(() => {
     navigation.setOptions({
-      title: `Conversation with ${route?.params?.talkingTo?.username}`,
+      title: `${route?.params?.talkingTo?.username}`,
     });
   }, []);
   const renderItem = ({ item: message }) => (
@@ -141,7 +142,7 @@ export default function Room({ route, navigation }) {
       outGoing={message.user.username !== route?.params?.talkingTo?.username}
     >
       <Author>
-        <Avatar source={{ uri: message?.user?.avatar }} />
+        <Avatar source={{ uri: message.user.avatar }} />
       </Author>
       <Message>{message.payload}</Message>
     </MessageContainer>
@@ -157,7 +158,7 @@ export default function Room({ route, navigation }) {
           style={{ width: "100%", paddingTop: 10 }}
           ItemSeparatorComponent={() => <View style={{ height: 20 }}></View>}
           data={data?.seeRoom?.messages}
-          keyExtractor={(message) => message.id}
+          keyExtractor={(message) => "" + message.id}
           renderItem={renderItem}
         />
         <TextInput
